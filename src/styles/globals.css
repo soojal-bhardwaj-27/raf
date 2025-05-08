@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #0A2463;
+  --secondary: #3E92CC;
+  --accent: #E6AF2E;
+  --success: #2E7D32;
+  --warning: #ED6C02;
+  --error: #D32F2F;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #333;
+  line-height: 1.5;
+}
+
+.nav-link {
+  @apply text-gray-800 hover:text-primary transition-colors relative;
+}
+
+.nav-link::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300;
+}
+
+.nav-link:hover::after {
+  @apply w-full;
+}
+
+.mobile-nav-link {
+  @apply block py-2 text-gray-800 hover:text-primary transition-colors;
+}
+
+.btn-primary {
+  @apply bg-accent hover:bg-accent/90 text-white py-3 px-6 rounded-full font-medium transition-all;
+}
+
+.btn-secondary {
+  @apply bg-white hover:bg-gray-100 text-primary border border-primary py-3 px-6 rounded-full font-medium transition-all;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.stat-item {
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.stat-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 40px;
+  height: 2px;
+  background-color: var(--accent);
+  transform: translateX(-50%);
+}
