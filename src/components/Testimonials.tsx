@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from '../hooks/useInView';
 
 const testimonials = [
@@ -7,22 +8,22 @@ const testimonials = [
     id: 1,
     name: "Sarah Johnson",
     role: "MBA Graduate, Class of 2023",
-    image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    content: "Studying at Raffles University was a transformative experience. The faculty's expertise and the practical approach to learning equipped me with the skills needed to succeed in my career. The global network I built here continues to be invaluable.",
+    image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg",
+    content: "Studying at Raffles University was a transformative experience...",
   },
   {
     id: 2,
     name: "Michael Chen",
     role: "Engineering Graduate, Class of 2022",
-    image: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    content: "The engineering program at Raffles University combines theoretical knowledge with hands-on experience in state-of-the-art laboratories. The industry partnerships provided me with internship opportunities that led directly to my current position.",
+    image: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg",
+    content: "The engineering program at Raffles University combines theoretical knowledge...",
   },
   {
     id: 3,
     name: "Priya Sharma",
     role: "Medical Student, Current",
-    image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    content: "The medical program at Raffles is rigorous but incredibly rewarding. The mentorship from experienced doctors and the clinical exposure we receive from day one is preparing us to be confident healthcare professionals ready to make a difference.",
+    image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg",
+    content: "The medical program at Raffles is rigorous but incredibly rewarding...",
   },
 ];
 
@@ -33,97 +34,97 @@ const Testimonials = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActive((prev) => (prev + 1) % testimonials.length);
-    }, 8000);
-    
+    }, 9000);
     return () => clearInterval(interval);
   }, []);
 
-  const next = () => {
-    setActive((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prev = () => {
-    setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+  const next = () => setActive((prev) => (prev + 1) % testimonials.length);
+  const prev = () => setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
   return (
     <section 
-      id="testimonials" 
-      className="py-24 bg-white"
+      id="testimonials"
       ref={ref}
+      className="py-24 relative bg-gradient-to-br from-purple-900 via-black to-gray-900 text-white overflow-hidden"
     >
-      <div className="container mx-auto px-4">
-        <div className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 transform ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
+      {/* Dynamic background glow */}
+      <div className="absolute -top-24 -left-24 w-[400px] h-[400px] bg-pink-600/20 rounded-full blur-[150px] animate-pulse"></div>
+
+      <div className="container mx-auto px-6 z-10 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-yellow-300">
             Student Success Stories
           </h2>
-          <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
-          <p className="text-gray-600 text-lg">
-            Hear what our students and alumni have to say about their experiences at Raffles University and how it shaped their careers and lives.
+          <div className="w-24 h-1 bg-pink-400 mx-auto my-6 rounded-full"></div>
+          <p className="text-gray-300 text-lg">
+            Hear what our students and alumni have to say about their experiences at Raffles University.
           </p>
-        </div>
+        </motion.div>
 
-        <div className={`relative max-w-5xl mx-auto transition-all duration-700 transform ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="overflow-hidden relative">
-            <div 
-              className="flex transition-transform duration-700 ease-in-out" 
-              style={{ transform: `translateX(-${active * 100}%)` }}
+        <div className="relative max-w-5xl mx-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={testimonials[active].id}
+              initial={{ opacity: 0, x: 80 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -80 }}
+              transition={{ duration: 0.6 }}
+              className="bg-white/10 backdrop-blur-md p-10 md:p-14 rounded-[30px] border border-white/20 shadow-xl relative"
+              style={{
+                clipPath: "polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%)"
+              }}
             >
-              {testimonials.map((testimonial) => (
-                <div key={testimonial.id} className="w-full flex-shrink-0">
-                  <div className="bg-gray-50 rounded-xl p-8 md:p-12 relative">
-                    <Quote className="absolute top-8 left-8 text-primary/10 h-16 w-16" />
-                    <div className="text-center md:text-left md:pl-12">
-                      <p className="text-gray-700 text-lg mb-8 relative z-10">
-                        "{testimonial.content}"
-                      </p>
-                      <div className="flex flex-col md:flex-row items-center justify-center md:justify-start">
-                        <div className="w-16 h-16 rounded-full overflow-hidden mb-4 md:mb-0 md:mr-4">
-                          <img 
-                            src={testimonial.image} 
-                            alt={testimonial.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-primary">{testimonial.name}</h4>
-                          <p className="text-gray-500 text-sm">{testimonial.role}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <Quote className="absolute top-6 left-6 text-pink-400 opacity-20 w-16 h-16" />
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <img
+                  src={testimonials[active].image}
+                  alt={testimonials[active].name}
+                  className="w-24 h-24 object-cover rounded-full border-4 border-pink-400 shadow-lg"
+                />
+                <div className="text-center md:text-left">
+                  <p className="text-lg text-gray-200 mb-4 italic">
+                    "{testimonials[active].content}"
+                  </p>
+                  <h4 className="text-xl font-semibold text-pink-300">{testimonials[active].name}</h4>
+                  <p className="text-sm text-gray-400">{testimonials[active].role}</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Arrows */}
+          <div className="absolute top-1/2 -translate-y-1/2 flex justify-between w-full px-4 md:px-0">
+            <button
+              onClick={prev}
+              className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition"
+            >
+              <ChevronLeft className="text-white w-6 h-6" />
+            </button>
+            <button
+              onClick={next}
+              className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition"
+            >
+              <ChevronRight className="text-white w-6 h-6" />
+            </button>
           </div>
 
-          <div className="flex justify-center mt-8 space-x-2">
-            {testimonials.map((_, index) => (
+          {/* Dots */}
+          <div className="flex justify-center mt-8 gap-2">
+            {testimonials.map((_, i) => (
               <button
-                key={index}
-                onClick={() => setActive(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  active === index ? 'bg-primary' : 'bg-gray-300'
+                key={i}
+                onClick={() => setActive(i)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  active === i ? 'bg-pink-400 scale-110' : 'bg-white/30'
                 }`}
-                aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
-
-          <button
-            onClick={prev}
-            className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-8 bg-white shadow-lg rounded-full p-2 hover:bg-gray-100 transition-colors"
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="h-6 w-6 text-primary" />
-          </button>
-          <button
-            onClick={next}
-            className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-8 bg-white shadow-lg rounded-full p-2 hover:bg-gray-100 transition-colors"
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="h-6 w-6 text-primary" />
-          </button>
         </div>
       </div>
     </section>

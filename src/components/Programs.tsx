@@ -40,15 +40,19 @@ const Programs = () => {
   return (
     <section 
       id="programs" 
-      className="py-24 bg-white relative"
+      className="py-24 bg-white relative overflow-hidden"
       ref={ref}
+      style={{
+        clipPath: 'polygon(0 5%, 5% 0, 95% 0, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0 95%)',
+        borderRadius: '3rem'
+      }}
     >
       <div className="container mx-auto px-4">
         <div className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 transform ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
             Academic Excellence & Innovation
           </h2>
-          <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
+          <div className="w-20 h-1 bg-accent mx-auto mb-6 rounded-full"></div>
           <p className="text-gray-600 text-lg">
             Discover our diverse range of academic programs designed to prepare you for success in your chosen field. Our curriculum combines theoretical knowledge with practical skills.
           </p>
@@ -56,7 +60,7 @@ const Programs = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
-            <div className="bg-gray-50 rounded-xl p-6 sticky top-24">
+            <div className="bg-gray-50 rounded-2xl p-6 sticky top-24 shadow-lg">
               <h3 className="text-xl font-semibold mb-6 text-primary">Our Programs</h3>
               <div className="space-y-3">
                 {programs.map(program => (
@@ -96,7 +100,7 @@ const Programs = () => {
                 }`}
               >
                 {activeProgram === program.id && (
-                  <div className="bg-white rounded-xl overflow-hidden shadow-lg">
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-xl">
                     <div className="h-64 overflow-hidden">
                       <img 
                         src={program.image} 
@@ -145,6 +149,12 @@ const Programs = () => {
           </div>
         </div>
       </div>
+
+      {/* Add decorative corner elements */}
+      <div className="absolute top-0 left-0 w-16 h-16 bg-primary/5 rounded-br-3xl"></div>
+      <div className="absolute top-0 right-0 w-16 h-16 bg-primary/5 rounded-bl-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-16 h-16 bg-primary/5 rounded-tr-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-16 h-16 bg-primary/5 rounded-tl-3xl"></div>
     </section>
   );
 };
