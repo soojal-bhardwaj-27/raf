@@ -13,20 +13,17 @@ const ASSISTANCE_STEPS: string[] = [
 ];
 
 const PARTNER_LOGOS: string[] = [
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
-  './google.png',
+  './cipla.png',
+  './daikin.png',
+  './genpact.png',
+  './havells.png',
+  './hdfc.png',
+  './hitachi.png',
+  './honda.png',
+  './yesbank.png',
+  './infosys.png',
+  './kotak.png',
+  './maruti.png',
 ];
 
 interface AlumniProfile {
