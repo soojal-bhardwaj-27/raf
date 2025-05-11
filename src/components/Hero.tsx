@@ -32,13 +32,21 @@ const Hero = () => {
         <div className="flex-grow flex items-center">
           {/* Background overlay with gradient */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/60 to-primary/30 z-10"></div>
-          {/* Background image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ 
-              backgroundImage: "url('./campus_img.png')",
-            }}
-          ></div>
+          {/* Background images */}
+          <div className="absolute inset-0 grid grid-cols-2 gap-1">
+            <div 
+              className="bg-cover bg-center"
+              style={{ 
+                backgroundImage: "url('./mam.jpg')",
+              }}
+            ></div>
+            <div 
+              className="bg-cover bg-center"
+              style={{ 
+                backgroundImage: "url('./campus_img.png')",
+              }}
+            ></div>
+          </div>
           {/* Content */}
           <div 
             ref={heroRef}
