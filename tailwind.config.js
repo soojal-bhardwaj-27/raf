@@ -16,6 +16,7 @@ export default {
       animation: {
         'infinite-scroll': 'infinite-scroll 25s linear infinite',
         'blob': 'blob 8s infinite',
+        'fade-in': 'fadeIn 1s ease-in-out forwards'
       },
       keyframes: {
         'infinite-scroll': {
@@ -27,23 +28,16 @@ export default {
           '33%': { transform: 'scale(1.2)' },
           '66%': { transform: 'scale(0.8)' },
         },
-      },
-      extend: {
-        keyframes: {
-          'fade-up': {
-            '0%': {
-              opacity: '0',
-              transform: 'translateY(20px)'
-            },
-            '100%': {
-              opacity: '1',
-              transform: 'translateY(0)'
-            },
+        fadeIn: {
+          'from': { 
+            opacity: '0',
+            transform: 'translateX(50px)'
           },
-        },
-        animation: {
-          'fade-up': 'fade-up 0.3s ease-out'
-        },
+          'to': { 
+            opacity: '1',
+            transform: 'translateX(0)'
+          }
+        }
       }
     },
   },
