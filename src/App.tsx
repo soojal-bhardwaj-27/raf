@@ -14,6 +14,7 @@ import Placements from './components/Placements';
 import Click2 from './components/click2';
 import Accreditations from './components/Accreditations';
 import Inspiration from './components/inspiration';
+import LifeAtRU from './components/LifeAtRU';
 import AdmissionProcess from './components/AdmissionProcess';
 import Apply from './components/Apply';
 import Footer from './components/Footer';
@@ -58,6 +59,7 @@ function App() {
         <Click2 />
         <Accreditations />
         <Inspiration />
+        <LifeAtRU />
         <AdmissionProcess />
         <Apply />
       </main>

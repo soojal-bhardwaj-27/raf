@@ -34,10 +34,20 @@ const AdmissionProcess = () => {
   return (
     <section 
       id="process" 
-      className="py-24 bg-gray-50"
+      className="py-24 relative bg-gray-50 overflow-hidden"
       ref={ref}
     >
-      <div className="container mx-auto px-4">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/groupimg.jpg"
+          alt="Background"
+          className="w-full h-full object-cover opacity-10"
+        />
+      </div>
+
+      {/* Content with relative positioning */}
+      <div className="container mx-auto px-4 relative z-10">
         <div className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 transform ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
             Admission Process

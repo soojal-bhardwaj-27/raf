@@ -81,10 +81,7 @@ const Campus = () => {
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                className="w-full h-[300px] md:h-[350px] object-cover rounded-2xl clip-corner"
-                style={{
-                  clipPath: 'polygon(0% 0%, 100% 0%, 100% 85%, 85% 100%, 0% 100%)'
-                }}
+                className="w-full h-[300px] md:h-[350px] object-cover rounded-2xl"
               />
             </div>
             <div className="flex justify-between mt-4 px-4">
