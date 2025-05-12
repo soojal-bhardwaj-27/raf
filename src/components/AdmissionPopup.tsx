@@ -51,98 +51,118 @@ const AdmissionPopup = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 bg-black/60 backdrop-blur-sm">
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-xl w-full p-8 animate-fade-up transition-all duration-500">
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 bg-black/70 backdrop-blur-md">
+      <div 
+        className="relative bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl max-w-xl w-full p-8 animate-fade-up transition-all duration-500 hover:shadow-blue-200/50"
+        style={{
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          transform: 'translateZ(0)'
+        }}
+      >
         <button
           onClick={() => setIsOpen(false)}
-          className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"
+          className="absolute -top-3 -right-3 bg-white text-gray-500 hover:text-red-500 transition-colors rounded-full p-2 shadow-lg hover:shadow-xl transform hover:scale-110 duration-200"
         >
           <X className="w-6 h-6" />
         </button>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <h2 className="text-3xl font-bold text-gray-800 mb-1">Apply Now</h2>
-          <p className="text-sm text-gray-500 mb-4">Fill out the form to start your journey</p>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="text-center mb-8">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">Apply Now</h2>
+            <p className="text-gray-600 text-lg">Fill out the form to start your journey</p>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              pattern="[A-Za-z ]{3,50}"
-              title="Name should be between 3 and 50 characters and contain only letters"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              pattern="[0-9]{10}"
-              title="Please enter a valid 10-digit phone number"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-            <input
-              type="text"
-              name="state"
-              placeholder="State"
-              value={formData.state}
-              onChange={handleChange}
-              required
-              pattern="[A-Za-z ]{2,50}"
-              title="Please enter a valid state name"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-            <select
-              name="degree"
-              value={formData.degree}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none col-span-1 sm:col-span-2"
-            >
-              <option value="">Select Degree</option>
-              {degrees.map(degree => (
-                <option key={degree} value={degree}>{degree}</option>
-              ))}
-            </select>
-            {formData.degree === 'Other' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="group">
               <input
                 type="text"
-                name="otherDegree"
-                placeholder="Please specify your degree"
-                value={formData.otherDegree}
+                name="name"
+                placeholder="Full Name"
+                value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none col-span-1 sm:col-span-2"
+                pattern="[A-Za-z ]{3,50}"
+                title="Name should be between 3 and 50 characters and contain only letters"
+                className="w-full border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 bg-white/50 backdrop-blur-sm hover:bg-white group-hover:border-blue-300"
               />
+            </div>
+            <div className="group">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 bg-white/50 backdrop-blur-sm hover:bg-white group-hover:border-blue-300"
+              />
+            </div>
+            <div className="group">
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                pattern="[0-9]{10}"
+                title="Please enter a valid 10-digit phone number"
+                className="w-full border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 bg-white/50 backdrop-blur-sm hover:bg-white group-hover:border-blue-300"
+              />
+            </div>
+            <div className="group">
+              <input
+                type="text"
+                name="state"
+                placeholder="State"
+                value={formData.state}
+                onChange={handleChange}
+                required
+                pattern="[A-Za-z ]{2,50}"
+                title="Please enter a valid state name"
+                className="w-full border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 bg-white/50 backdrop-blur-sm hover:bg-white group-hover:border-blue-300"
+              />
+            </div>
+            <div className="group col-span-1 sm:col-span-2">
+              <select
+                name="degree"
+                value={formData.degree}
+                onChange={handleChange}
+                required
+                className="w-full border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 bg-white/50 backdrop-blur-sm hover:bg-white group-hover:border-blue-300"
+              >
+                <option value="">Select Degree</option>
+                {degrees.map(degree => (
+                  <option key={degree} value={degree}>{degree}</option>
+                ))}
+              </select>
+            </div>
+            {formData.degree === 'Other' && (
+              <div className="group col-span-1 sm:col-span-2">
+                <input
+                  type="text"
+                  name="otherDegree"
+                  placeholder="Please specify your degree"
+                  value={formData.otherDegree}
+                  onChange={handleChange}
+                  required
+                  className="w-full border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 bg-white/50 backdrop-blur-sm hover:bg-white group-hover:border-blue-300"
+                />
+              </div>
             )}
           </div>
 
-          <div className="flex gap-4 mt-6">
+          <div className="flex gap-4 mt-8">
             <button
               type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg"
+              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98]"
             >
               Submit
             </button>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="flex-1 border border-gray-300 hover:bg-gray-100 text-gray-700 py-3 rounded-lg font-medium transition-all"
+              className="flex-1 border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 py-4 rounded-xl font-medium transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
             >
               Cancel
             </button>

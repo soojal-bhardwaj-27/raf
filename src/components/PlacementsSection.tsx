@@ -34,7 +34,7 @@ interface AlumniProfile {
 }
 
 const ALUMNI_PROFILES: AlumniProfile[] = [
-  { name: 'Nisha Gandhi', role: 'Currently Practising at Rajasthan High Court ', photo: '/nisha.png', bgColor: 'red' },
+  { name: 'Nisha Gandhi', role: 'Currently Practising at Rajasthan High Court ', photo: '/nisha1.jpg', bgColor: 'red' },
   { name: 'Avinash', role: 'Data Strategist', photo: '/ambuja.png', bgColor: 'yellow' },
   { name: 'Ankit', role: 'Security Engineer',  photo: '/tsAnkit.jpg', bgColor: 'red' },
   { name: 'Manpool', role: 'Sr. Cloud Technical Manager', photo: 'Manpool.jpg', bgColor: 'yellow' },
