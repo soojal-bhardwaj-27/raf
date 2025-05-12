@@ -1,99 +1,121 @@
-import { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import PlacementsSection from './PlacementsSection';
+import { useEffect, useState } from 'react';
 import AdmissionPopup from './AdmissionPopup';
 
-const Hero = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
+interface SlideType {
+  image: string;
+  content: string;
+}
+
+const Hero = (): JSX.Element => {
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const slides: SlideType[] = [
+    { 
+      image: '/campus_img.png', 
+      content: 'Welcome to Raffles University - Shaping Future Leaders'
+    },
+    { 
+      image: '/alabar.png', 
+      content: 'Welcome to Raffles University - Shaping Future Leaders'
+    },
+    { 
+      image: '/convo.jpg', 
+      content: 'Celebrating Academic Excellence at Our Convocation Ceremony'
+    },
+    { 
+      image: '/good.png', 
+      content: 'Empowering Education for a Better Tomorrow'
+    }
+  ];
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!heroRef.current) return;
-      const scrollPosition = window.scrollY;
-      const opacity = 1 - scrollPosition / 700;
-      const translateY = scrollPosition * 0.3;
-
-      heroRef.current.style.opacity = Math.max(opacity, 0).toString();
-      heroRef.current.style.transform = `translateY(${translateY}px)`;
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
   return (
     <>
-      <div className="min-h-screen flex flex-col relative overflow-hidden">
+      <div className="relative w-full h-[600px] overflow-hidden">
+        {/* Slider with enhanced transitions */}
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-all duration-1000 transform ${currentSlide === index ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
+          >
+            <img
+              src={slide.image}
+              alt={slide.content}
+              className="w-full h-full object-cover transition-transform duration-1000"
+              loading={index === 0 ? "eager" : "lazy"}
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 backdrop-blur-sm text-white p-6 transform transition-all duration-1000">
+              <p className="text-xl text-center font-semibold">{slide.content}</p>
+            </div>
+          </div>
+        ))}
+
         {/* Admission Popup */}
         <AdmissionPopup />
 
-        <div className="flex-grow flex items-center relative">
-          {/* Background overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 z-10"></div>
+        {/* Dynamic overlay that changes with slides */}
+        <div className={`absolute inset-0 bg-blue-900 opacity-40 mix-blend-multiply z-10 transition-opacity duration-1000`} />
 
-          {/* Background image */}
-          <div className="absolute inset-0 z-0">
-            <div
-              className="w-full h-full bg-cover bg-center"
-              style={{ 
-                backgroundImage: "url('./mam3.png')",
-                backgroundPosition: 'center 20%'
-              }}
-            ></div>
+        {/* Hero Content with animations - only shown for the first slide */}
+        <div className={`relative z-30 px-10 pt-28 max-w-2xl transform transition-all duration-1000 ${currentSlide === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
+          <h2 className="text-4xl md:text-5xl font-bold text-yellow-300 uppercase animate-fadeIn">
+            A Launchpad for
+          </h2>
+          <h1 className="mt-2 text-6xl md:text-7xl font-extrabold text-white uppercase leading-tight animate-slideIn">
+            Global Impact
+          </h1>
+          <p className="mt-6 text-xl text-white animate-fadeIn delay-200">
+            Step into a World of Opportunity
+          </p>
+          <div className="mt-6 inline-block bg-yellow-300 text-black font-bold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+            Diploma, UG and PG program
           </div>
-
-          {/* Main content */}
-          <div
-            ref={heroRef}
-            className="container mx-auto px-4 relative z-30 pt-20 transition-all duration-300"
+          <button 
+            type="button"
+            className="mt-4 ml-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-10 py-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
           >
-            <div className="max-w-3xl text-white">
-              <h5 className="text-accent font-semibold mb-3 tracking-wider text-lg md:text-xl">
-                WELCOME TO RAFFLES UNIVERSITY
-              </h5>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Shaping Tomorrow's Leaders with Excellence
-              </h1>
-              <p className="text-lg md:text-xl mb-8 text-gray-100 max-w-2xl">
-                Join a world-class institution that combines academic rigor, innovative research, and global opportunities to prepare you for success.
-              </p>
+            Apply Now <ArrowRight className="inline w-5 h-5 ml-2" />
+          </button>
+        </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="#apply"
-                  className="btn-primary flex items-center justify-center sm:justify-start group"
-                >
-                  Apply for 2025
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </a>
-                <a
-                  href="#programs"
-                  className="btn-secondary flex items-center justify-center sm:justify-start"
-                >
-                  Explore Programs
-                </a>
-              </div>
+        {/* Enhanced Slider Navigation */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-500 transform ${currentSlide === index ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/70'}`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}        
+        </div>
 
-              <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
-                <div className="stat-item">
-                  <div className="text-3xl md:text-4xl font-bold text-accent">50+</div>
-                  <div className="text-sm mt-1">Programs</div>
-                </div>
-                <div className="stat-item">
-                  <div className="text-3xl md:text-4xl font-bold text-accent">300+</div>
-                  <div className="text-sm mt-1">Faculty Members</div>
-                </div>
-                <div className="stat-item">
-                  <div className="text-3xl md:text-4xl font-bold text-accent">25k+</div>
-                  <div className="text-sm mt-1">Students</div>
-                </div>
-                <div className="stat-item">
-                  <div className="text-3xl md:text-4xl font-bold text-accent">50+</div>
-                  <div className="text-sm mt-1">Countries</div>
-                </div>
-              </div>
+        {/* Accreditation Logos with animations */}
+        <div className="absolute top-10 right-10 flex flex-col items-end z-30">
+          {[
+            { src: '/pharmacy bar.png', alt: 'Pharmacy Council of India' },
+            { src: '/icar.png', alt: 'ICAR Accreditation' },
+            { src: '/ugc.png', alt: 'UGC Logo' },
+            { src: '/councilbar.png', alt: 'Bar Council of India' },
+          ].map((logo, index) => (
+            <div
+              key={index}
+              className={`w-24 h-24 rounded-full border-4 border-white bg-white shadow-[0_0_15px_rgba(255,255,255,0.6)] overflow-hidden mb-6 ${index % 2 !== 0 ? 'ml-6' : ''} transform transition-all duration-500 hover:scale-110`}
+            >
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className="w-full h-full object-contain p-2"
+              />
             </div>
-          </div>
+          ))}
         </div>
       </div>
 

@@ -29,16 +29,15 @@ const PARTNER_LOGOS: string[] = [
 interface AlumniProfile {
   name: string;
   role: string;
-  company: string;
   photo: string;
   bgColor: 'red' | 'yellow';
 }
 
 const ALUMNI_PROFILES: AlumniProfile[] = [
-  { name: 'Gunjan Pandya', role: 'Data Engineer', company: 'Google', photo: '/google.webp', bgColor: 'red' },
-  { name: 'Manasi Dalwani', role: 'Data Strategist', company: 'Google', photo: '/assets/manasi.jpg', bgColor: 'yellow' },
-  { name: 'Milind Purswani', role: 'Security Engineer', company: 'Amazon', photo: '/assets/milind.jpg', bgColor: 'red' },
-  { name: 'Jay Vaidya', role: 'Sr. Cloud Technical Manager', company: 'Amazon', photo: '/assets/jay.jpg', bgColor: 'yellow' },
+  { name: 'Nisha Gandhi', role: 'Currently Practising at Rajasthan High Court ', photo: '/nisha.png', bgColor: 'red' },
+  { name: 'Avinash', role: 'Data Strategist', photo: '/ambuja.png', bgColor: 'yellow' },
+  { name: 'Ankit', role: 'Security Engineer',  photo: '/tsAnkit.jpg', bgColor: 'red' },
+  { name: 'Manpool', role: 'Sr. Cloud Technical Manager', photo: 'Manpool.jpg', bgColor: 'yellow' },
 ];
 
 // LogoSlider Component
@@ -154,11 +153,11 @@ const AlumniSlider: FC = () => {
                   className="w-full h-[280px] object-cover relative z-10 transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute top-3 right-3 bg-white p-2 rounded-xl z-20 shadow-lg">
-                  <img
+                  {/* <img
                     src={`/${person.company.toLowerCase()}.png`}
-                    alt={person.company}
-                    className="h-5 w-auto object-contain"
-                  />
+                    alt={person.company} */}
+                    {/* className="h-5 w-auto object-contain"
+                  /> */}
                 </div>
               </div>
             );
