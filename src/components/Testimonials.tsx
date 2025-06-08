@@ -16,7 +16,7 @@ const testimonials: Testimonial[] = [
     id: 1,
     name: "Mr. Ajay Goyal",
     role: "M.Sc (Animal Behaviour), Anglia Ruskin University, Cambridge UK (Batch – 2016–19)",
-    image: "./images/ajaygoyal.jpg",
+    image: "/images/ajaygoyal.jpg",
     content: "I want to thank my university for making my career in wildlife. It was a great help and guidance given by my dearest mentor Dr. Ashok Verma Sir. Raffles University has provided a great platform to students for overall learning by organizing different activity. Only I can say that university has the best of the faculty, infrastructure and in all the best of environment. Miss You."
   },
   {

@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface NavbarProps {
+  onNavLinkClick?: () => void; // Changed to no arguments
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onNavLinkClick }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAdmissionsDropdownOpen, setIsAdmissionsDropdownOpen] = useState(false);
+  const [isSchoolsDropdownOpen, setIsSchoolsDropdownOpen] = useState(false); // State for Schools dropdown
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -15,93 +21,142 @@ const Navbar = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleAdmissionsDropdown = () => {
+    setIsAdmissionsDropdownOpen(!isAdmissionsDropdownOpen);
+    setIsSchoolsDropdownOpen(false); // Close other dropdowns
+  };
+
+  const toggleSchoolsDropdown = () => { // Function to toggle Schools dropdown
+    setIsSchoolsDropdownOpen(!isSchoolsDropdownOpen);
+    setIsAdmissionsDropdownOpen(false); // Close other dropdowns
+  };
+
+  const handleLinkClick = () => { // Changed to no arguments
+    if (onNavLinkClick) {
+      onNavLinkClick(); // Call without arguments
+    }
+    setIsMenuOpen(false); // Close mobile menu on link click
+    setIsAdmissionsDropdownOpen(false);
+    setIsSchoolsDropdownOpen(false);
   };
 
   return (
-    <nav 
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-white shadow-md py-2' 
-          : 'bg-transparent py-4'
-      }`}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            <a href="#" className="flex items-center">
-              <img 
-                src="./logo.png" 
-                alt="Raffles University" 
-                className="h-12 w-auto"
-              />
-            </a>
-          </div>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
+      <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+        <Link to="/" className="text-xl font-bold text-gray-800" onClick={handleLinkClick}>
+          <img src="/logo.png" alt="Raffles University" className="h-12" />
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex space-x-8">
-            <a href="#programs" className="nav-link">Programs</a>
-            <a href="#campus" className="nav-link">Campus</a>
-            <a href="#faculty" className="nav-link">Faculty</a>
-            <a href="#testimonials" className="nav-link">Testimonials</a>
-            <div className="relative group">
-              <button className="nav-link flex items-center">
-                Admissions <ChevronDown className="h-4 w-4 ml-1" />
-              </button>
-              <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 invisible group-hover:visible transition-all opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-2">
-                <a href="#process" className="block px-4 py-2 hover:bg-gray-100">Process</a>
-                <a href="#eligibility" className="block px-4 py-2 hover:bg-gray-100">Eligibility</a>
-                <a href="#fees" className="block px-4 py-2 hover:bg-gray-100">Fees & Scholarships</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="hidden lg:block">
-            <a 
-              href="#apply" 
-              className="bg-accent hover:bg-accent/90 text-white py-2 px-6 rounded-full font-medium transition-all"
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-6">
+          <Link to="/" className={`text-gray-800 hover:text-blue-600 transition-colors duration-300 ${isScrolled ? 'text-gray-800' : 'text-white'}`} onClick={handleLinkClick}>Home</Link>
+          
+          {/* Admissions Dropdown */}
+          <div className="relative">
+            <button
+              onClick={toggleAdmissionsDropdown}
+              className={`text-gray-800 hover:text-blue-600 transition-colors duration-300 focus:outline-none ${isScrolled ? 'text-gray-800' : 'text-white'}`}
             >
-              Apply Now
-            </a>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="lg:hidden">
-            <button 
-              onClick={toggleMenu}
-              className="text-primary focus:outline-none"
-            >
-              {isOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
+              Admissions <i className="fas fa-chevron-down text-xs ml-1"></i>
             </button>
+            {isAdmissionsDropdownOpen && (
+              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-20">
+                <Link to="/admission-process" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Admission Process</Link>
+                <Link to="/apply" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Apply Now</Link>
+              </div>
+            )}
           </div>
+
+          {/* Schools Dropdown */}
+          <div className="relative">
+            <button
+              onClick={toggleSchoolsDropdown}
+              className={`text-gray-800 hover:text-blue-600 transition-colors duration-300 focus:outline-none ${isScrolled ? 'text-gray-800' : 'text-white'}`}
+            >
+              Schools <i className="fas fa-chevron-down text-xs ml-1"></i>
+            </button>
+            {isSchoolsDropdownOpen && (
+              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-20">
+                <Link to="/engineering" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Engineering</Link>
+                <Link to="/law" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Law</Link>
+                <Link to="/pharmacy" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Pharmacy</Link>
+                <Link to="/management" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Management</Link>
+                <Link to="/basic-applied-science" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Basic Applied Science</Link>
+                <Link to="/agriculture" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Agriculture</Link>
+                <Link to="/design" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>humanities</Link>
+              </div>
+            )}
+          </div>
+
+          <Link to="/placements" className={`text-gray-800 hover:text-blue-600 transition-colors duration-300 ${isScrolled ? 'text-gray-800' : 'text-white'}`} onClick={handleLinkClick}>Placements</Link>
+          <Link to="/research" className={`text-gray-800 hover:text-blue-600 transition-colors duration-300 ${isScrolled ? 'text-gray-800' : 'text-white'}`} onClick={handleLinkClick}>Research</Link>
+          <Link to="/contact" className={`text-gray-800 hover:text-blue-600 transition-colors duration-300 ${isScrolled ? 'text-gray-800' : 'text-white'}`} onClick={handleLinkClick}>Contact Us</Link>
+        </div>
+
+        {/* Mobile menu button */}
+        <div className="md:hidden flex items-center">
+          <button onClick={toggleMenu} className="text-gray-800 focus:outline-none">
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+          </button>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      {isOpen && (
-        <div className="lg:hidden bg-white shadow-lg py-4 px-4 absolute w-full">
-          <div className="flex flex-col space-y-4">
-            <a href="#programs" className="mobile-nav-link" onClick={toggleMenu}>Programs</a>
-            <a href="#campus" className="mobile-nav-link" onClick={toggleMenu}>Campus</a>
-            <a href="#faculty" className="mobile-nav-link" onClick={toggleMenu}>Faculty</a>
-            <a href="#testimonials" className="mobile-nav-link" onClick={toggleMenu}>Testimonials</a>
-            <a href="#process" className="mobile-nav-link" onClick={toggleMenu}>Admissions</a>
-            <a 
-              href="#apply" 
-              className="bg-accent hover:bg-accent/90 text-white py-2 px-6 rounded-full font-medium transition-all text-center"
-              onClick={toggleMenu}
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white shadow-lg py-2">
+          <Link to="/" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Home</Link>
+          
+          {/* Mobile Admissions Dropdown */}
+          <div className="relative">
+            <button
+              onClick={toggleAdmissionsDropdown}
+              className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 focus:outline-none"
             >
-              Apply Now
-            </a>
+              Admissions <i className="fas fa-chevron-down text-xs ml-1"></i>
+            </button>
+            {isAdmissionsDropdownOpen && (
+              <div className="pl-6">
+                <Link to="/admission-process" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Admission Process</Link>
+                <Link to="/apply" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Apply Now</Link>
+              </div>
+            )}
           </div>
+
+          {/* Mobile Schools Dropdown */}
+          <div className="relative">
+            <button
+              onClick={toggleSchoolsDropdown}
+              className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 focus:outline-none"
+            >
+              Schools <i className="fas fa-chevron-down text-xs ml-1"></i>
+            </button>
+            {isSchoolsDropdownOpen && (
+              <div className="pl-6">
+                <Link to="/engineering" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Engineering</Link>
+                <Link to="/law" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Law</Link>
+                <Link to="/pharmacy" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Pharmacy</Link>
+                <Link to="/management" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Management</Link>
+                <Link to="/basic-applied-science" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Basic Applied Science</Link>
+                <Link to="/agriculture" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Agriculture</Link>
+                <Link to="/design" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Design</Link>
+              </div>
+            )}
+          </div>
+
+          <Link to="/placements" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Placements</Link>
+          <Link to="/research" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Research</Link>
+          <Link to="/contact" className="block px-4 py-2 text-gray-800 hover:bg-gray-100" onClick={handleLinkClick}>Contact Us</Link>
         </div>
       )}
     </nav>
