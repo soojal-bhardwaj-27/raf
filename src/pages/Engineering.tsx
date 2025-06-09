@@ -1,5 +1,14 @@
 
-const ZigZagSection = ({ title, text, image, reverse }) => {
+import React from 'react';
+
+interface ZigZagSectionProps {
+  title: string;
+  text: string;
+  image: string;
+  reverse: boolean;
+}
+
+const ZigZagSection: React.FC<ZigZagSectionProps> = ({ title, text, image, reverse }) => {
   return (
     <div className={`flex flex-col md:flex-row ${reverse ? "md:flex-row-reverse" : ""} items-center gap-8 py-12`}>
       <img src={image} alt={title} className="w-full md:w-1/2 rounded-xl shadow-lg" />
@@ -33,6 +42,7 @@ const Engineering = () => {
       {/* Welcome Section */}
       <div className="max-w-6xl mx-auto mt-16">
         <ZigZagSection
+          reverse={false}
           title="Welcome to Excellence in Engineering"
           text="At the School of Engineering, Raffles University Neemrana, we are dedicated to shaping future engineering leaders with strong academic and ethical foundations."
           image="/Welcome.png"
@@ -46,6 +56,7 @@ const Engineering = () => {
         />
 
         <ZigZagSection
+         reverse={false}
           title="State-of-the-Art Labs"
           text="Experience hands-on learning with modern labs in AI, robotics, mechanical design, and more."
           image="/images/labs.jpg"
